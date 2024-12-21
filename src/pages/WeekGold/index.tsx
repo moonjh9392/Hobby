@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle, Edit2, Check, Trash2 } from "lucide-react";
 
@@ -273,19 +273,18 @@ const WeekGold = () => {
           className='flex items-center gap-1 text-gray-500 hover:text-gray-700'
           title='데이터 초기화'
         >
-          {/* <RotateCcw className='w-4 h-4' /> */}
           <span>초기화</span>
         </button>
       </CardHeader>
 
       <CardContent>
         <div className='overflow-x-auto'>
-          <table className='w-full border-collapse'>
+          <table className='w-full border-collapse border border-gray-200'>
             <thead>
               <tr>
-                <th className='border p-2'>레이드</th>
+                <th className='border border-gray-200 p-2'>레이드</th>
                 {characters.map((char, i) => (
-                  <th key={i} className='border p-2'>
+                  <th key={i} className='border border-gray-200 p-2'>
                     {editingCharacter === i ? (
                       <div className='flex items-center gap-2'>
                         <input
@@ -302,7 +301,6 @@ const WeekGold = () => {
                             if (e.key === "Enter") {
                               setEditingCharacter(null);
                             } else if (e.key === "Escape") {
-                              // ESC 키 이벤트 무시
                               e.preventDefault();
                             }
                           }}
@@ -324,13 +322,13 @@ const WeekGold = () => {
                     )}
                   </th>
                 ))}
-                <th className='border p-2'>합계</th>
+                <th className='border border-gray-200 p-2'>합계</th>
               </tr>
             </thead>
             <tbody>
               {raids.map((raid) => (
                 <tr key={raid.id}>
-                  <td className='border p-2'>
+                  <td className='border border-gray-200 p-2'>
                     <div className='flex items-center justify-between'>
                       <span>{raid.name}</span>
                       <Trash2
@@ -340,74 +338,95 @@ const WeekGold = () => {
                     </div>
                   </td>
                   {characters.map((_, charIndex) => (
-                    <td key={charIndex} className='border p-2'>
-                      <div className='flex flex-col gap-1'>
-                        <label className='flex items-center gap-1 text-sm'>
-                          <input
-                            type='radio'
-                            name={`raid-${raid.id}-char-${charIndex}`}
-                            checked={selections[raid.id][charIndex] === "none"}
-                            onChange={() =>
-                              handleSelectionChange(raid.id, charIndex, "none")
-                            }
-                          />
-                          <span>선택안함</span>
-                        </label>
-                        <label className='flex items-center gap-1 text-sm'>
-                          <input
-                            type='radio'
-                            name={`raid-${raid.id}-char-${charIndex}`}
-                            checked={
-                              selections[raid.id][charIndex] === "single"
-                            }
-                            onChange={() =>
-                              handleSelectionChange(
-                                raid.id,
-                                charIndex,
-                                "single"
-                              )
-                            }
-                          />
-                          <span>싱글 ({formatGold(raid.singleGold)}G)</span>
-                        </label>
-                        <label className='flex items-center gap-1 text-sm'>
-                          <input
-                            type='radio'
-                            name={`raid-${raid.id}-char-${charIndex}`}
-                            checked={
-                              selections[raid.id][charIndex] === "normal"
-                            }
-                            onChange={() =>
-                              handleSelectionChange(
-                                raid.id,
-                                charIndex,
-                                "normal"
-                              )
-                            }
-                          />
-                          <span>노말 ({formatGold(raid.normalGold)}G)</span>
-                        </label>
-                        <label className='flex items-center gap-1 text-sm'>
-                          <input
-                            type='radio'
-                            name={`raid-${raid.id}-char-${charIndex}`}
-                            checked={selections[raid.id][charIndex] === "hard"}
-                            onChange={() =>
-                              handleSelectionChange(raid.id, charIndex, "hard")
-                            }
-                          />
-                          <span>하드 ({formatGold(raid.hardGold)}G)</span>
-                        </label>
+                    <td key={charIndex} className='border border-gray-200 p-2'>
+                      <div className='flex flex-col space-y-2'>
+                        <div className='flex flex-col space-y-1'>
+                          <label className='flex items-center gap-2 text-sm cursor-pointer'>
+                            <input
+                              type='radio'
+                              name={`raid-${raid.id}-char-${charIndex}`}
+                              checked={
+                                selections[raid.id][charIndex] === "none"
+                              }
+                              onChange={() =>
+                                handleSelectionChange(
+                                  raid.id,
+                                  charIndex,
+                                  "none"
+                                )
+                              }
+                              className='form-radio'
+                            />
+                            <span>선택안함</span>
+                          </label>
+                          <label className='flex items-center gap-2 text-sm cursor-pointer'>
+                            <input
+                              type='radio'
+                              name={`raid-${raid.id}-char-${charIndex}`}
+                              checked={
+                                selections[raid.id][charIndex] === "single"
+                              }
+                              onChange={() =>
+                                handleSelectionChange(
+                                  raid.id,
+                                  charIndex,
+                                  "single"
+                                )
+                              }
+                              className='form-radio'
+                            />
+                            <span>싱글 ({formatGold(raid.singleGold)}G)</span>
+                          </label>
+                          <label className='flex items-center gap-2 text-sm cursor-pointer'>
+                            <input
+                              type='radio'
+                              name={`raid-${raid.id}-char-${charIndex}`}
+                              checked={
+                                selections[raid.id][charIndex] === "normal"
+                              }
+                              onChange={() =>
+                                handleSelectionChange(
+                                  raid.id,
+                                  charIndex,
+                                  "normal"
+                                )
+                              }
+                              className='form-radio'
+                            />
+                            <span>노말 ({formatGold(raid.normalGold)}G)</span>
+                          </label>
+                          <label className='flex items-center gap-2 text-sm cursor-pointer'>
+                            <input
+                              type='radio'
+                              name={`raid-${raid.id}-char-${charIndex}`}
+                              checked={
+                                selections[raid.id][charIndex] === "hard"
+                              }
+                              onChange={() =>
+                                handleSelectionChange(
+                                  raid.id,
+                                  charIndex,
+                                  "hard"
+                                )
+                              }
+                              className='form-radio'
+                            />
+                            <span>하드 ({formatGold(raid.hardGold)}G)</span>
+                          </label>
+                        </div>
                       </div>
                     </td>
                   ))}
-                  <td className='border p-2 text-right font-bold'>
+                  <td className='border border-gray-200 p-2 text-right font-bold'>
                     {formatGold(calculateRaidTotal(raid.id))}G
                   </td>
                 </tr>
               ))}
               <tr>
-                <td colSpan={characters.length + 2} className='border p-2'>
+                <td
+                  colSpan={characters.length + 2}
+                  className='border border-gray-200 p-2'
+                >
                   <div className='flex items-center gap-4'>
                     <input
                       type='text'
@@ -465,16 +484,18 @@ const WeekGold = () => {
                 </td>
               </tr>
               <tr>
-                <td className='border p-2 font-bold'>캐릭터 총합</td>
+                <td className='border border-gray-200 p-2 font-bold'>
+                  캐릭터 총합
+                </td>
                 {characters.map((_, charIndex) => (
                   <td
                     key={charIndex}
-                    className='border p-2 text-right font-bold'
+                    className='border border-gray-200 p-2 text-right font-bold'
                   >
                     {formatGold(calculateCharacterTotal(charIndex))}G
                   </td>
                 ))}
-                <td className='border p-2 text-right font-bold bg-gray-100'>
+                <td className='border border-gray-200 p-2 text-right font-bold bg-gray-100'>
                   {formatGold(calculateGrandTotal())}G
                 </td>
               </tr>
